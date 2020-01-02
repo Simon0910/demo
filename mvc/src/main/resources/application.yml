@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+faster:
+  secret:
+    enabled: true
+    decryptionKeyFilePath: E:\IdeaProjects\demo\mastercard\src\test\resources\crypto\myPrivateKey.key
+    aaa-bbb-ccc: abb
+
+logging:
+  level:
+    root: info
+    org.mybatis: debug
+    java.sql: debug
+    org.springframework.web: trace
+
+master:
+  api:
+    env: mtf
+    majorVer: 1
+    minorVer: 0
