@@ -1,5 +1,8 @@
 package com.example.mvc.rest.ssl;
 
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
+
 import javax.net.ssl.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -114,17 +117,23 @@ public class SSLUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        KeyManager[] keyManagers = null;
-        try {
-            keyManagers = getKeyManagers(keyStore, "123456");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // KeyManager[] keyManagers = null;
+        // try {
+        //     keyManagers = getKeyManagers(keyStore, "123456");
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
+
+        // SSLContext sslContext = SSLContext.getInstance("TLS");
+        // // sslContext.init(new KeyManager[]{}, new TrustManager[]{}, new SecureRandom());
+        // sslContext.init(keyManagers, null, new SecureRandom());
 
         try {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            // sslContext.init(new KeyManager[]{}, new TrustManager[]{}, new SecureRandom());
-            sslContext.init(keyManagers, null, new SecureRandom());
+            // Trust own CA and all self-signed certs
+            SSLContext sslContext = SSLContexts.custom()
+                    .loadKeyMaterial(keyStore, "123456".toCharArray())
+                    .build();
+
             return sslContext;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

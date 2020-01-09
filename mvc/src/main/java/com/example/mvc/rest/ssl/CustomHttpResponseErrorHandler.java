@@ -35,7 +35,7 @@ public class CustomHttpResponseErrorHandler implements ResponseErrorHandler {
     public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
         // 默认处理非200的返回，会抛异常
         HttpStatus statusCode = clientHttpResponse.getStatusCode();
-        System.out.println("hasError statusCode = " + statusCode);
+        System.out.println("handleError statusCode = " + statusCode);
         int unknownStatusCode = clientHttpResponse.getRawStatusCode();
         System.out.println(unknownStatusCode);
         HttpStatus statusCode2 = HttpStatus.resolve(unknownStatusCode);

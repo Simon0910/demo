@@ -5,6 +5,7 @@ import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
@@ -19,6 +20,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -32,6 +34,7 @@ public class RestTemplateConfig {
                 // .requestFactory((Supplier<ClientHttpRequestFactory>) requestFactory)
                 .errorHandler(new CustomHttpResponseErrorHandler())
                 .build();
+        restTemplate.setRequestFactory(requestFactory);
         List<HttpMessageConverter<?>> httpMessageConverters = restTemplate.getMessageConverters();
         httpMessageConverters.stream().forEach(httpMessageConverter -> {
             if (httpMessageConverter instanceof StringHttpMessageConverter) {
@@ -46,10 +49,17 @@ public class RestTemplateConfig {
     @Bean(name = "requestFactory")
     public HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory() {
         SSLContext sslcontext = SSLUtil.getSSLContext();
+        // Allow TLSv1 protocol only
+        HostnameVerifier hostnameVerifier = NoopHostnameVerifier.INSTANCE;
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                sslcontext,
+                new String[]{"TLSv1.2"},
+                null,
+                hostnameVerifier);
         //设置协议http和https对应的处理socket链接工厂的对象
         Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.INSTANCE)
-                .register("https", new SSLConnectionSocketFactory(sslcontext))
+                .register("https", sslsf)
                 .build();
         // 长链接保持时间长度20秒
         // PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = new
@@ -61,14 +71,21 @@ public class RestTemplateConfig {
         poolingHttpClientConnectionManager.setMaxTotal(2 * getMaxCpuCore() + 3);
         // 同路由并发数
         poolingHttpClientConnectionManager.setDefaultMaxPerRoute(2 * getMaxCpuCore());
-        HttpClientBuilder builder = HttpClients.custom().setConnectionManager(poolingHttpClientConnectionManager);
-        // 重试次数3次，并开启
-        builder.setRetryHandler(new DefaultHttpRequestRetryHandler(3, true));
+        HttpClientBuilder builder = HttpClients.custom()
+                .setConnectionManager(poolingHttpClientConnectionManager)
+                // 重试次数3次，并开启
+                .setRetryHandler(new DefaultHttpRequestRetryHandler(3, true))
+                ;
         // 保持长链接配置，keep-alive
         // builder.setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy());
         //创建自定义的httpclient对象
-        CloseableHttpClient client = builder.build();
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(client);
+        CloseableHttpClient httpclient = builder.build();
+
+        // CloseableHttpClient httpclient = HttpClients.custom()
+        //         .setSSLSocketFactory(sslsf)
+        //         .build();
+
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpclient);
         // 链接超时配置 16秒
         requestFactory.setConnectTimeout(16000);
         // 连接读取超时配置

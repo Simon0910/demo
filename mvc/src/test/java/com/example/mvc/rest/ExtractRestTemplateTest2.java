@@ -40,6 +40,6 @@ public class ExtractRestTemplateTest2 extends MvcApplicationTests {
                 HttpMethod.POST,
                 GetTokenResponseSchema.class);
 
-        System.out.println(" ==> " + JSON.toJSONString(exchange.getData()));
+        System.out.println(" ==> " + JSON.toJSONString(exchange));
     }
 }
