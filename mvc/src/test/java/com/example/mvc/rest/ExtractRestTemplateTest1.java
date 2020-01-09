@@ -1,12 +1,19 @@
 package com.example.mvc.rest;
 
+import com.alibaba.fastjson.JSON;
 import com.example.mvc.MvcApplicationTests;
+import com.example.mvc.rest.mc.GetTokenRequestSchema;
+import com.example.mvc.rest.mc.GetTokenResponseSchema;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,16 +24,16 @@ import java.util.concurrent.Executors;
  * @create 2020-01-09 10:17
  */
 @Slf4j
-public class ExtractRestTemplateTest extends MvcApplicationTests {
+public class ExtractRestTemplateTest1 extends MvcApplicationTests {
 
     @Autowired
     ExtractRestTemplate extractRestTemplate;
 
-    private static Integer sum = 2;
+    private static Integer sum = 1;
     private static Map<String, Object> map = new HashMap<>(sum);
 
     @Test
-    public void baiduTest() throws InterruptedException {
+    public void requestTest() throws InterruptedException {
         ExecutorService executor = Executors.newCachedThreadPool();
         CountDownLatch latch = new CountDownLatch(sum);
 
@@ -59,8 +66,11 @@ public class ExtractRestTemplateTest extends MvcApplicationTests {
             RestResponseDTO<String> exchange = extractRestTemplate.exchange(
                     "https://www.baidu.com/",
                     null,
+                    null,
+                    HttpMethod.GET,
                     String.class);
-            System.out.println(this.name + " ==> " + exchange.getData());
+
+            System.out.println(this.name + " ==> " + JSON.toJSONString(exchange.getData()));
             map.put(this.name, this.name);
             // add();
             latch.countDown();

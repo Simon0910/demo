@@ -107,10 +107,24 @@ public class SSLUtil {
     }
 
     public static SSLContext getSSLContext() {
+        InputStream keyStoreInputStream = SSLUtil.class.getClassLoader().getResourceAsStream("env/dev/jd-mtf-mastercard-keystore.jks");
+        KeyStore keyStore = null;
+        try {
+            keyStore = getKeyStore(keyStoreInputStream, "jks", "123456");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        KeyManager[] keyManagers = null;
+        try {
+            keyManagers = getKeyManagers(keyStore, "123456");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(new KeyManager[]{}, new TrustManager[]{}, new SecureRandom());
-            // sslContext.init(getKeyManagers(null, null), getTrustManagers((InputStream) null), new SecureRandom());
+            // sslContext.init(new KeyManager[]{}, new TrustManager[]{}, new SecureRandom());
+            sslContext.init(keyManagers, null, new SecureRandom());
             return sslContext;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
