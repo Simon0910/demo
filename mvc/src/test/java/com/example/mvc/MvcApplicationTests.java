@@ -1,22 +1,15 @@
 package com.example.mvc;
 
-import com.example.mvc.rest.ExtractRestTemplate;
-import com.example.mvc.rest.RestResponseDTO;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 @SpringBootTest
-class MvcApplicationTests {
-
-    @Autowired
-    ExtractRestTemplate extractRestTemplate;
+@AutoConfigureMockMvc
+public class MvcApplicationTests {
 
     @Test
-    public void contextLoads() {
-        RestResponseDTO<String> exchange = extractRestTemplate.exchange("https://www.baidu.com/", null, String.class);
-        System.out.println(exchange.getData());
+    void contextLoads() {
     }
 
 }

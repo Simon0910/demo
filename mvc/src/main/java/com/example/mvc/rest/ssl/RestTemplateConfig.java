@@ -14,25 +14,32 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
-import java.util.function.Supplier;
+import java.nio.charset.Charset;
+import java.util.List;
 
 @Configuration
 public class RestTemplateConfig {
 
     @Bean
     public ExtractRestTemplate httpsRestTemplate(HttpComponentsClientHttpRequestFactory requestFactory) {
-		RestTemplate restTemplate = new RestTemplateBuilder()
-				.requestFactory((Supplier<ClientHttpRequestFactory>) requestFactory)
-				.errorHandler(new CustomHttpResponseErrorHandler())
-				.messageConverters(new MappingJackson2HttpMessageConverter())
-				.build();
-		return new ExtractRestTemplate(restTemplate);
+        RestTemplate restTemplate = new RestTemplateBuilder()
+                // .requestFactory((Supplier<ClientHttpRequestFactory>) requestFactory)
+                .errorHandler(new CustomHttpResponseErrorHandler())
+                .build();
+        List<HttpMessageConverter<?>> httpMessageConverters = restTemplate.getMessageConverters();
+        httpMessageConverters.stream().forEach(httpMessageConverter -> {
+            if (httpMessageConverter instanceof StringHttpMessageConverter) {
+                StringHttpMessageConverter messageConverter = (StringHttpMessageConverter) httpMessageConverter;
+                messageConverter.setDefaultCharset(Charset.forName("UTF-8"));
+            }
+        });
+        return new ExtractRestTemplate(restTemplate);
     }
 
 

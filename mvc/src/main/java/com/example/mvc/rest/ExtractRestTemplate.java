@@ -20,14 +20,14 @@ public class ExtractRestTemplate extends FilterRestTemplate {
             HttpMethod httpMethod = HttpMethod.GET;
 
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("x-request-id", "uuidFor32Bit");
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            // httpHeaders.set("x-request-id", "uuidFor32Bit");
+            // httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            // httpHeaders.setContentType(MediaType.TEXT_HTML);
 
-            String requestBody = JSONObject.toJSONString("jsonStr"); ;
+            String requestBody = JSONObject.toJSONString(""); ;
 
             HttpEntity<Object> httpEntity = new HttpEntity<>(requestBody, httpHeaders);
-            ResponseEntity<T> responseEntity = restTemplate.exchange(url, httpMethod, httpEntity, responseType,
-                    uriVariables);
+            ResponseEntity<T> responseEntity = restTemplate.exchange(url, httpMethod, httpEntity, responseType, uriVariables);
 
             restResponseDTO.setData(responseEntity.getBody());
             restResponseDTO.setMessage(responseEntity.getStatusCode().name());

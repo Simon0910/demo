@@ -109,6 +109,7 @@ public class SSLUtil {
     public static SSLContext getSSLContext() {
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(new KeyManager[]{}, new TrustManager[]{}, new SecureRandom());
             // sslContext.init(getKeyManagers(null, null), getTrustManagers((InputStream) null), new SecureRandom());
             return sslContext;
         } catch (NoSuchAlgorithmException e) {
