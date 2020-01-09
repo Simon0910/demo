@@ -17,7 +17,8 @@ public class ConcurrencyRequestTest2 {
 
     @Test
     public void baiduTest() throws InterruptedException {
-        ExecutorService executor = Executors.newCachedThreadPool();
+        // ExecutorService executor = Executors.newCachedThreadPool();
+        ExecutorService executor = Executors.newFixedThreadPool(5000);
         CountDownLatch latch = new CountDownLatch(1);
         CyclicBarrier barrier = new CyclicBarrier(sum, new Boss());
         // CyclicBarrier barrier = new CyclicBarrier(sum);

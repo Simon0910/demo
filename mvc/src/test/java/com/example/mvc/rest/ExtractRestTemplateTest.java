@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,32 +22,30 @@ public class ExtractRestTemplateTest extends MvcApplicationTests {
     @Autowired
     ExtractRestTemplate extractRestTemplate;
 
-    private static Integer sum = 5000;
+    private static Integer sum = 2;
+    private static Map<String, Object> map = new HashMap<>(sum);
 
     @Test
     public void baiduTest() throws InterruptedException {
         ExecutorService executor = Executors.newCachedThreadPool();
         CountDownLatch latch = new CountDownLatch(sum);
-        CyclicBarrier barrier = new CyclicBarrier(sum);
 
         for (int i = 0; i < sum; i++) {
-            Worker w = new Worker(barrier, latch, i + "");
+            Worker w = new Worker(latch, i + "");
             executor.submit(w);
         }
 
         latch.await();
-        Thread.sleep(10000);
         System.out.println(count);
+        System.out.println(map.size());
     }
 
 
     class Worker implements Runnable {
-        private CyclicBarrier barrier;
         private CountDownLatch latch;
         private String name;
 
-        public Worker(CyclicBarrier barrier, CountDownLatch latch, String name) {
-            this.barrier = barrier;
+        public Worker(CountDownLatch latch, String name) {
             this.latch = latch;
             this.name = name;
         }
@@ -57,17 +56,13 @@ public class ExtractRestTemplateTest extends MvcApplicationTests {
         }
 
         private void doWork() {
-            // RestResponseDTO<String> exchange = extractRestTemplate.exchange(
-            //         "https://www.baidu.com/",
-            //         null,
-            //         String.class);
-            // System.out.println(this.name + " ==> " + exchange.getData());
-            // try {
-            //     this.barrier.await();
-            // } catch (InterruptedException | BrokenBarrierException e) {
-            //     e.printStackTrace();
-            // }
-            add();
+            RestResponseDTO<String> exchange = extractRestTemplate.exchange(
+                    "https://www.baidu.com/",
+                    null,
+                    String.class);
+            System.out.println(this.name + " ==> " + exchange.getData());
+            map.put(this.name, this.name);
+            // add();
             latch.countDown();
         }
     }
