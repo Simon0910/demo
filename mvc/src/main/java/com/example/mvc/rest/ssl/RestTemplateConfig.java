@@ -33,6 +33,7 @@ public class RestTemplateConfig {
         RestTemplate restTemplate = new RestTemplateBuilder()
                 // .requestFactory((Supplier<ClientHttpRequestFactory>) requestFactory)
                 .errorHandler(new CustomHttpResponseErrorHandler())
+                .interceptors(new CustomClientHttpRequestInterceptor())
                 .build();
         restTemplate.setRequestFactory(requestFactory);
         List<HttpMessageConverter<?>> httpMessageConverters = restTemplate.getMessageConverters();
