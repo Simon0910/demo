@@ -2,18 +2,13 @@ package com.example.mvc.rest;
 
 import com.alibaba.fastjson.JSON;
 import com.example.mvc.MvcApplicationTests;
-import com.example.mvc.rest.mc.GetTokenRequestSchema;
-import com.example.mvc.rest.mc.GetTokenResponseSchema;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -63,7 +58,7 @@ public class ExtractRestTemplateTest1 extends MvcApplicationTests {
         }
 
         private void doWork() {
-            RestResponseDTO<String> exchange = extractRestTemplate.exchange(
+            ApiResponse<String> exchange = extractRestTemplate.exchange(
                     "https://www.baidu.com/",
                     null,
                     null,

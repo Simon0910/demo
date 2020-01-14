@@ -33,7 +33,7 @@ public class ExtractRestTemplateTest2 extends MvcApplicationTests {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        RestResponseDTO<GetTokenResponseSchema> exchange = extractRestTemplate.exchange(
+        ApiResponse<GetTokenResponseSchema> exchange = extractRestTemplate.exchange(
                 "https://mtf.services.mastercard.com/mtf/mdes/digitization/1/0/getToken",
                 requestSchema,
                 httpHeaders,
