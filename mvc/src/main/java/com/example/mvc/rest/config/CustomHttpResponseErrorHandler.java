@@ -1,4 +1,4 @@
-package com.example.mvc.rest.ssl;
+package com.example.mvc.rest.config;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;

@@ -1,4 +1,4 @@
-package com.example.mvc.rest.ssl;
+package com.example.mvc.rest.config;
 
 import com.example.mvc.rest.ExtractRestTemplate;
 import org.apache.http.config.Registry;
