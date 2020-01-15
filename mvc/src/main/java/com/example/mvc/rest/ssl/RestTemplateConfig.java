@@ -31,7 +31,6 @@ public class RestTemplateConfig {
     @Bean
     public ExtractRestTemplate httpsRestTemplate(HttpComponentsClientHttpRequestFactory requestFactory) {
         RestTemplate restTemplate = new RestTemplateBuilder()
-                // .requestFactory((Supplier<ClientHttpRequestFactory>) requestFactory)
                 .errorHandler(new CustomHttpResponseErrorHandler())
                 .interceptors(new CustomClientHttpRequestInterceptor())
                 .build();
@@ -75,8 +74,7 @@ public class RestTemplateConfig {
         HttpClientBuilder builder = HttpClients.custom()
                 .setConnectionManager(poolingHttpClientConnectionManager)
                 // 重试次数3次，并开启
-                .setRetryHandler(new DefaultHttpRequestRetryHandler(3, true))
-                ;
+                .setRetryHandler(new DefaultHttpRequestRetryHandler(3, true));
         // 保持长链接配置，keep-alive
         // builder.setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy());
         //创建自定义的httpclient对象

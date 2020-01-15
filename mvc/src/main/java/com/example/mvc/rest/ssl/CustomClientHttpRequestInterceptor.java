@@ -14,7 +14,8 @@ import java.io.IOException;
  */
 public class CustomClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
     @Override
-    public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] bytes, ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {
+    public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] bytes,
+                                        ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {
         ClientHttpResponse clientHttpResponse = clientHttpRequestExecution.execute(httpRequest, bytes);
         return clientHttpResponse;
     }

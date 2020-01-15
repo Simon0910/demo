@@ -1,6 +1,5 @@
 package com.example.mvc.rest.ssl;
 
-import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.*;
@@ -10,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Collection;
@@ -110,7 +108,8 @@ public class SSLUtil {
     }
 
     public static SSLContext getSSLContext() {
-        InputStream keyStoreInputStream = SSLUtil.class.getClassLoader().getResourceAsStream("env/dev/jd-mtf-mastercard-keystore.jks");
+        InputStream keyStoreInputStream = SSLUtil.class.getClassLoader()
+                .getResourceAsStream("env/dev/jd-mtf-mastercard-keystore.jks");
         KeyStore keyStore = null;
         try {
             keyStore = getKeyStore(keyStoreInputStream, "jks", "123456");

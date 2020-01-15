@@ -12,13 +12,12 @@ import java.util.Map;
  */
 @Data
 public class ApiResponse<T> {
-    public static final Integer UNKNOWN_ERROR = 999999;
-    final private int statusCode;
+    final private String statusCode;
     final private String message;
     final private Map<String, List<String>> headers;
     final private T data;
 
-    public ApiResponse(int statusCode, String message, Map<String, List<String>> headers, T data) {
+    public ApiResponse(String statusCode, String message, Map<String, List<String>> headers, T data) {
         this.statusCode = statusCode;
         this.message = message;
         this.headers = headers;
