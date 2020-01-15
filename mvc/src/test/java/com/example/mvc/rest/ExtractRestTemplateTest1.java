@@ -5,10 +5,11 @@ import com.example.mvc.MvcApplicationTests;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,18 +29,22 @@ public class ExtractRestTemplateTest1 extends MvcApplicationTests {
     private static Map<String, Object> map = new HashMap<>(sum);
 
     @Test
-    public void requestTest() throws InterruptedException {
-        ExecutorService executor = Executors.newCachedThreadPool();
+    public void requestTest() throws InterruptedException, ApiException {
+        // ExecutorService executor = Executors.newCachedThreadPool();
         CountDownLatch latch = new CountDownLatch(sum);
+        //
+        // for (int i = 0; i < sum; i++) {
+        //     Worker w = new Worker(latch, i + "");
+        //     executor.submit(w);
+        // }
+        //
+        // latch.await();
+        // System.out.println(count);
+        // System.out.println(map.size());
 
-        for (int i = 0; i < sum; i++) {
-            Worker w = new Worker(latch, i + "");
-            executor.submit(w);
-        }
+        Worker worker = new Worker(latch, "test");
+        worker.doWork();
 
-        latch.await();
-        System.out.println(count);
-        System.out.println(map.size());
     }
 
 
@@ -62,12 +67,22 @@ public class ExtractRestTemplateTest1 extends MvcApplicationTests {
         }
 
         private void doWork() throws ApiException {
+            List<Pair> queryParams = new ArrayList<>();
+            queryParams.add(new Pair("time", new Date().toString()));
+            Map<String, String> uriVariables = new HashMap();
+            uriVariables.put("fooValue", "2");
+            String url = "https://www.baidu.com?name={fooValue}";
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.TEXT_HTML);
             ApiResponse<String> exchange = extractRestTemplate.exchange(
-                    "https://www.baidu.com/",
+                    url,
+                    queryParams,
                     null,
                     null,
                     HttpMethod.GET,
-                    String.class);
+                    String.class,
+                    uriVariables);
 
             System.out.println(this.name + " ==> " + JSON.toJSONString(exchange.getData()));
             map.put(this.name, this.name);

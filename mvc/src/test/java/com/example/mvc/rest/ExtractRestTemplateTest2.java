@@ -10,6 +10,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -35,6 +38,7 @@ public class ExtractRestTemplateTest2 extends MvcApplicationTests {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         ApiResponse<GetTokenResponseSchema> apiResponse = extractRestTemplate.exchange(
                 "https://mtf.services.mastercard.com/mtf/mdes/digitization/1/0/getToken",
+                null,
                 requestSchema,
                 httpHeaders,
                 HttpMethod.POST,
