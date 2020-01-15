@@ -1,6 +1,6 @@
 package com.example.mvc.rest.config;
 
-import com.example.mvc.rest.ExtractRestTemplate;
+import com.example.mvc.rest.ExpandRestTemplate;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -29,7 +29,7 @@ import java.util.List;
 public class RestTemplateConfig {
 
     @Bean
-    public ExtractRestTemplate httpsRestTemplate(HttpComponentsClientHttpRequestFactory requestFactory) {
+    public ExpandRestTemplate httpsRestTemplate(HttpComponentsClientHttpRequestFactory requestFactory) {
         RestTemplate restTemplate = new RestTemplateBuilder()
                 .errorHandler(new CustomHttpResponseErrorHandler())
                 .interceptors(new CustomClientHttpRequestInterceptor())
@@ -42,7 +42,7 @@ public class RestTemplateConfig {
                 messageConverter.setDefaultCharset(Charset.forName("UTF-8"));
             }
         });
-        return new ExtractRestTemplate(restTemplate);
+        return new ExpandRestTemplate(restTemplate);
     }
 
 

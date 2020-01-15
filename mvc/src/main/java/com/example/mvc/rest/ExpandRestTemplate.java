@@ -15,10 +15,10 @@ import java.time.OffsetDateTime;
 import java.util.*;
 
 @Slf4j
-public class ExtractRestTemplate extends FilterRestTemplate {
+public class ExpandRestTemplate extends AbstractRestTemplate {
     private RestTemplate restTemplate;
 
-    public ExtractRestTemplate(RestTemplate restTemplate) {
+    public ExpandRestTemplate(RestTemplate restTemplate) {
         super(restTemplate);
         this.restTemplate = restTemplate;
     }

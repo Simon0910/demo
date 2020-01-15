@@ -10,9 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,7 +20,7 @@ import java.util.UUID;
 public class ExtractRestTemplateTest2 extends MvcApplicationTests {
 
     @Autowired
-    ExtractRestTemplate extractRestTemplate;
+    ExpandRestTemplate expandRestTemplate;
 
     @Test
     public void mcTest() throws ApiException {
@@ -36,7 +33,7 @@ public class ExtractRestTemplateTest2 extends MvcApplicationTests {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        ApiResponse<GetTokenResponseSchema> apiResponse = extractRestTemplate.exchange(
+        ApiResponse<GetTokenResponseSchema> apiResponse = expandRestTemplate.exchange(
                 "https://mtf.services.mastercard.com/mtf/mdes/digitization/1/0/getToken",
                 null,
                 requestSchema,

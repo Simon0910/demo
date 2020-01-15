@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
  * @author super
  */
 @AllArgsConstructor
-public abstract class FilterRestTemplate implements RestOperations {
+public abstract class AbstractRestTemplate implements RestOperations {
     @Delegate
     protected volatile RestTemplate restTemplate;
     //实现RestOperations所有的接口

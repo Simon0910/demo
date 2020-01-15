@@ -11,8 +11,6 @@ import org.springframework.http.MediaType;
 
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author liuzhipeng
@@ -23,7 +21,7 @@ import java.util.concurrent.Executors;
 public class ExtractRestTemplateTest1 extends MvcApplicationTests {
 
     @Autowired
-    ExtractRestTemplate extractRestTemplate;
+    ExpandRestTemplate expandRestTemplate;
 
     private static Integer sum = 1;
     private static Map<String, Object> map = new HashMap<>(sum);
@@ -75,7 +73,7 @@ public class ExtractRestTemplateTest1 extends MvcApplicationTests {
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.TEXT_HTML);
-            ApiResponse<String> exchange = extractRestTemplate.exchange(
+            ApiResponse<String> exchange = expandRestTemplate.exchange(
                     url,
                     queryParams,
                     null,
