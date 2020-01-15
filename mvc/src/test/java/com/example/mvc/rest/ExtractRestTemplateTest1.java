@@ -54,10 +54,14 @@ public class ExtractRestTemplateTest1 extends MvcApplicationTests {
 
         @Override
         public void run() {
-            this.doWork();
+            try {
+                this.doWork();
+            } catch (ApiException e) {
+                e.printStackTrace();
+            }
         }
 
-        private void doWork() {
+        private void doWork() throws ApiException {
             ApiResponse<String> exchange = extractRestTemplate.exchange(
                     "https://www.baidu.com/",
                     null,

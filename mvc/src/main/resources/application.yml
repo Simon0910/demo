@@ -4,7 +4,7 @@ spring:
 
 faster:
   secret:
-    enabled: true
+    enabled: false
     decryptionKeyFilePath: E:\IdeaProjects\demo\mastercard\src\test\resources\crypto\myPrivateKey.key
     aaa-bbb-ccc: abb
 

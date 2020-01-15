@@ -3,9 +3,11 @@ package com.example.mvc.config;
 import com.example.mvc.annotation.SecretBody;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 import java.lang.annotation.Annotation;
 
+@Configuration
 @ConfigurationProperties(prefix = "faster.secret")
 @Data
 public class SecretConfiguration {
