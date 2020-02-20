@@ -89,32 +89,73 @@ public class DateTimeUtil {
     }
 
 
+
     final DateTime DISTRIBUTION_TIME_SPLIT_TIME = new DateTime().withTime(15,0,0,0);
     private Date calculateDistributionTimeByOrderCreateTime(Date orderCreateTime){
         DateTime orderCreateDateTime = new DateTime(orderCreateTime);
         return orderCreateDateTime.isAfter(DISTRIBUTION_TIME_SPLIT_TIME) ? wrapDistributionTime(orderCreateDateTime.plusDays(1)) : wrapDistributionTime(orderCreateDateTime.plusDays(2));
     }
+
+
     private Date wrapDistributionTime(DateTime distributionTime){
         boolean isSunday = (DateTimeConstants.SUNDAY == distributionTime.getDayOfWeek());
         return isSunday ? distributionTime.plusDays(1).toDate() : distributionTime.toDate() ;
     }
 
-    public static void main(String[] args) {
-        System.out.println(DateTimeUtil.dateToStr(new Date(), "yyyy-MM-dd"));
-//        System.out.println(DateTimeUtil.strToDate("2010-01-01 11:11:11", "yyyy-MM-dd HH:mm:ss"));
-//        System.out.println(DateTimeUtil.strToDate("2010-01-01 11:11:11"));
-//        System.out.println(DateTimeUtil.millisToDate(1572945129000L));
 
-        Date now = new Date();
+    /**
+     * 下次提醒日期
+     *
+     * @param day
+     * @param reminderDay
+     * @return
+     */
+    public static DateTime getNextRemindDay(int day, DateTime reminderDay) {
+        // 每月30 14:30:05 号提醒
+        day = 33;
+        // 假设当前日期是 2020-01-30
+        DateTime dateTime = new DateTime(2020, 1, 30, 12, 23, 50, 007);
+        // DateTime dateTime = new DateTime(2020, 2, 29, 12, 23, 50, 007);
+        System.out.println("当前: \t" + dateTime.toString("yyyy-MM-dd HH:mm:ss:sss"));
+
+        // 下一个月是 2月
+        DateTime nextMonth = dateTime.plusMonths(1);
+        System.out.println("下个月: \t" + nextMonth.toString("yyyy-MM-dd HH:mm:ss:sss"));
+
+        // DateTime maxDayOfYear = nextMonth.monthOfYear().withMaximumValue();
+        // System.out.println(maxDayOfYear.toString("yyyy-MM-dd HH:mm:ss:sss"));
+        // 最大日期是 29
+        DateTime maxDayOfMonth = nextMonth.dayOfMonth().withMaximumValue();
+        // System.out.println(maxDayOfMonth.toString("yyyy-MM-dd HH:mm:ss:sss"));
+
+        // 提醒日期
+        if (day > maxDayOfMonth.getDayOfMonth()) {
+            day = maxDayOfMonth.getDayOfMonth();
+        }
+
+        // update db
+        DateTime nextRemid = maxDayOfMonth.withDayOfMonth(day);
+        System.out.println("下次提醒: \t" +nextRemid.toString("yyyy-MM-dd HH:mm:ss:sss"));
+        return nextRemid;
+    }
+
+    public static void main(String[] args) {
+        // System.out.println(DateTimeUtil.dateToStr(new Date(), "yyyy-MM-dd"));
+       // System.out.println(DateTimeUtil.strToDate("2010-01-01 11:11:11", "yyyy-MM-dd HH:mm:ss"));
+       // System.out.println(DateTimeUtil.strToDate("2010-01-01 11:11:11"));
+       // System.out.println(DateTimeUtil.millisToDate(1572945129000L));
+
+        // Date now = new Date();
         // 测试获取今天开始的时间，比较与当前时间的大小
-        Date startTimeOfToday = getStartTimeOfToday();
-        System.out.println(dateToStr(startTimeOfToday));
+        // Date startTimeOfToday = getStartTimeOfToday();
+        // System.out.println(dateToStr(startTimeOfToday));
         // Assert.isTrue(now.getTime() > getStartTimeOfToday().getTime(), "现在小于或等于当前时间");
 
         // 测试获取今天最后的时间，比较与当前时间的大小
-        Date lastTimeOfToday = getLastTimeOfToday();
-        System.out.println(dateToStr(lastTimeOfToday));
+        // Date lastTimeOfToday = getLastTimeOfToday();
+        // System.out.println(dateToStr(lastTimeOfToday));
         // Assert.isTrue(now.getTime() < getLastTimeOfToday().getTime(), "现在大于或等于当前时间");
 
+        getNextRemindDay(30, null);
     }
 }
