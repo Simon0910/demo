@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.lzp.demo.mapper")
+@MapperScan({"com.lzp.demo.mapper", "com.lzp.demo.dao"})
 public class MybatisServiceApplication {
 
     public static void main(String[] args) {

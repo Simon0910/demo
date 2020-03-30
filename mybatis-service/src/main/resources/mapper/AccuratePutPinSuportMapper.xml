@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzp.demo.dao.AccuratePutPinSuportMapper">
+
+    <resultMap id="BaseResultMap" type="com.lzp.demo.entity.AccuratePutPinSuport">
+        <!--@Table portal_accurate_put_pin_support-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="jdPin" column="jd_pin" jdbcType="VARCHAR"/>
+        <result property="accuratePutIds" column="accurate_put_ids" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, jd_pin, accurate_put_ids
+        from portal.portal_accurate_put_pin_support
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, jd_pin, accurate_put_ids
+        from portal.portal_accurate_put_pin_support
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, jd_pin, accurate_put_ids
+        from portal.portal_accurate_put_pin_support
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="jdPin != null and jdPin != ''">
+                and jd_pin = #{jdPin}
+            </if>
+            <if test="accuratePutIds != null and accuratePutIds != ''">
+                and accurate_put_ids = #{accuratePutIds}
+            </if>
+        </where>
+    </select>
+    <select id="queryListByJdPinList" resultType="com.lzp.demo.entity.AccuratePutPinSuport">
+        select
+          id, jd_pin, accurate_put_ids
+        from portal.portal_accurate_put_pin_support
+        where jd_pin in
+        <foreach collection ="list" item="item" separator ="," open="(" close=")">
+            #{item}
+        </foreach >
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into portal.portal_accurate_put_pin_support(jd_pin, accurate_put_ids)
+        values (#{jdPin}, #{accuratePutIds})
+    </insert>
+    <insert id="insertListBatch">
+        insert into portal.portal_accurate_put_pin_support(jd_pin, accurate_put_ids)
+        values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.jdPin}, #{item.accuratePutIds})
+        </foreach >
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update portal.portal_accurate_put_pin_support
+        <set>
+            <if test="jdPin != null and jdPin != ''">
+                jd_pin = #{jdPin},
+            </if>
+            <if test="accuratePutIds != null and accuratePutIds != ''">
+                accurate_put_ids = #{accuratePutIds},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from portal.portal_accurate_put_pin_support where id = #{id}
+    </delete>
+
+</mapper>
