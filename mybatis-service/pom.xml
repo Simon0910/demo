@@ -125,6 +125,17 @@
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.22</version>
         </dependency>
+
+        <!--<dependency>-->
+        <!--    <groupId>org.mybatis.generator</groupId>-->
+        <!--    <artifactId>mybatis-generator</artifactId>-->
+        <!--    <version>1.4.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>org.mybatis.generator</groupId>-->
+        <!--    <artifactId>mybatis-generator-maven-plugin</artifactId>-->
+        <!--    <version>1.4.0</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
@@ -132,6 +143,28 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.44</version>
+                    </dependency>
+                    <!-- 通用mapper依赖  假如需要使用通用mapper，放开注释 -->
+                    <dependency>
+                        <groupId>tk.mybatis</groupId>
+                        <artifactId>mapper</artifactId>
+                        <version>4.1.5</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
         <!-- 解决idea导入maven工程无法把mapper.xml文件添加到target文件目录下的问题 -->
