@@ -2,12 +2,13 @@ package com.example.mvc.easyexcel;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
-import com.example.mvc.utils.EasyExcelUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,8 @@ public class EasyexcelController {
 
     @GetMapping("/downloadExcel")
     public Object downloadExcel(HttpServletResponse response) throws IOException {
-        EasyExcelUtil.downloadResponseSet(response, "filename-test");
-        EasyExcel.write(response.getOutputStream())
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        EasyExcel.write(outputStream)
                 .head(createDynamicHeadList())
                 .autoCloseStream(Boolean.FALSE)
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
@@ -37,6 +38,7 @@ public class EasyexcelController {
                 .sheet("sheetname-test")
                 .doWrite(createDynamicModelList());
 
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         return "ss";
     }
 
