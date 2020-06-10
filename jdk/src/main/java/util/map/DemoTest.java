@@ -1,6 +1,8 @@
 package util.map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DemoTest {
     static final int MAXIMUM_CAPACITY = 1 << 30;
@@ -16,7 +18,86 @@ public class DemoTest {
     }
 
     public static void main(String[] args) {
-        test02();
+        // test04();
+        // test06();
+        test07();
+    }
+
+    private static void test07() {
+        HashMap<String, String> map = new HashMap<>();
+        for (int i = 0; i < 13; i++) {
+            System.out.println(map.put("a" + i, "aa"));
+        }
+        for (int i = 0; i < 13; i++) {
+            System.out.println(map.put("a" + i, "aa"));
+        }
+    }
+
+    /**
+     * resize()
+     */
+    private static void test06() {
+        int size = 100;
+
+        int oldCap = 16;
+        List[] oldTab = new ArrayList[oldCap];
+
+        // % 取模 2的n次幂-1
+        for (int hash = 0; hash < size; hash++) {
+            List oldList = oldTab[hash & oldCap - 1];
+            if (oldList != null) {
+                oldList.add(hash);
+            } else {
+                List list = new ArrayList();
+                list.add(hash);
+                oldTab[hash & oldCap - 1] = list;
+            }
+        }
+
+        // 扩容
+        System.out.println(">>>>>>>>>>>>>>>>>>>>");
+        List[] newTab = new ArrayList[oldCap * 2];
+
+        for (int i = 0; i < oldCap; i++) {
+            List<Integer> oldHead = oldTab[i];
+            int len = oldHead.size();
+            int j = 0;
+
+            List loHead = new ArrayList();
+            List hiHead = new ArrayList();
+            do {
+                Integer hash = oldHead.get(j);
+                if ((hash & oldCap) == 0) {
+                    loHead.add(hash);
+                } else {
+                    hiHead.add(hash);
+                }
+                j++;
+            } while (j < len);
+            newTab[i] = loHead;
+            newTab[i + oldCap] = hiHead;
+        }
+
+    }
+
+    private static void test05() {
+        System.out.println(tableSizeFor(5000));
+        System.out.println(8192 * 0.75);
+    }
+
+    private static void test04() {
+        HashMap<String, String> map = new HashMap<>();
+        for (int i = 0; i < 13; i++) {
+            System.out.println(map.put("a" + i, "aa"));
+        }
+    }
+
+    private static void test03() {
+        Integer[] arr = new Integer[16];
+        System.out.println(arr.length);
+
+        Integer[] arr2 = new Integer[]{1, 2, 3};
+        System.out.println(arr2.length);
     }
 
     private static void test02() {
