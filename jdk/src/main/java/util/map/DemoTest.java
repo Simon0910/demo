@@ -20,16 +20,28 @@ public class DemoTest {
     public static void main(String[] args) {
         // test04();
         // test06();
-        test07();
+        // test07();
+        test08();
+    }
+
+    /**
+     * treeifyBin
+     */
+    private static void test08() {
+        HashMap<User, User> map = new HashMap<User, User>();
+        for (int i = 1; i <= 20; i++) {
+            User user = new User();
+            map.put(user, user);
+            System.out.println("i =" + i);
+        }
     }
 
     private static void test07() {
         HashMap<String, String> map = new HashMap<>();
-        for (int i = 0; i < 13; i++) {
-            System.out.println(map.put("a" + i, "aa"));
-        }
-        for (int i = 0; i < 13; i++) {
-            System.out.println(map.put("a" + i, "aa"));
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 13; j++) {
+                System.out.println(map.put("a" + j, "aa"));
+            }
         }
     }
 
@@ -132,5 +144,21 @@ public class DemoTest {
         System.out.println("20) ==> " + tableSizeFor(20));
         System.out.println("100 ==> " + tableSizeFor(100));
         System.out.println("200 ==> " + tableSizeFor(200));
+    }
+}
+
+
+class User {
+
+    //保证每个元素放入同一个索引,将hashcode设置为1
+    @Override
+    public int hashCode() {
+        return 1;
+    }
+
+    //保证在同一个索引中,每个元素不会因为相同被覆盖,将equles设置为false
+    @Override
+    public boolean equals(Object obj) {
+        return false;
     }
 }
