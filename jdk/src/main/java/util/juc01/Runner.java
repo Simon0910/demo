@@ -1,4 +1,4 @@
-package util.juc;
+package util.juc01;
 
 /**
  * @author lzp on 2020/6/16.
