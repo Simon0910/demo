@@ -51,31 +51,18 @@ public class TransferMoney implements Runnable {
         int fromHash = System.identityHashCode(from);
         int toHash = System.identityHashCode(to);
         if (fromHash < toHash) {
-            System.out.println("1");
             synchronized (from) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 synchronized (to) {
                     new Helper().transfer();
                 }
             }
         } else if (fromHash > toHash) {
-            System.out.println("2");
             synchronized (to) {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 synchronized (from) {
                     new Helper().transfer();
                 }
             }
         } else {
-            System.out.println("22");
             synchronized (lock) {
                 synchronized (to) {
                     synchronized (from) {

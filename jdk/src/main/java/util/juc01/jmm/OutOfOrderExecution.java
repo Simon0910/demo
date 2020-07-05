@@ -19,12 +19,13 @@ public class OutOfOrderExecution {
             a = 0;
             b = 0;
 
-            CountDownLatch latch = new CountDownLatch(1);
+            CountDownLatch latch = new CountDownLatch(3);
 
             Thread one = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        latch.countDown();
                         latch.await();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -37,6 +38,7 @@ public class OutOfOrderExecution {
                 @Override
                 public void run() {
                     try {
+                        latch.countDown();
                         latch.await();
                     } catch (InterruptedException e) {
                         e.printStackTrace();

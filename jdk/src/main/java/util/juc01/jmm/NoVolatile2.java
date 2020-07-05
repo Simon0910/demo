@@ -26,9 +26,7 @@ public class NoVolatile2 implements Runnable {
     public void run() {
         for (int i = 0; i < 10000; i++) {
             flipDone();
-            if (done) {
-                realA.incrementAndGet();
-            }
+            realA.incrementAndGet();
         }
     }
 

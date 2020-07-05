@@ -12,7 +12,6 @@ public class FixedThreadPoolTest {
         ExecutorService executorService = Executors.newFixedThreadPool(4);
         for (int i = 0; i < 1000; i++) {
             executorService.execute(new Task());
-            executorService.submit(new Task());
         }
     }
 }
