@@ -23,13 +23,26 @@ public class Sort03BubbleSort implements Sort {
     }
 
     public static <E extends Comparable> void mySort(E[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = 0; j < arr.length - 1 - i; j++) {
-                if (arr[j].compareTo(arr[j + 1]) > 0) {
-                    swap(arr, i - 1, i);
+//        for (int i = 0; i < arr.length - 1; i++) {
+//            for (int j = 0; j < arr.length - 1 - i; j++) {
+//                if (arr[j].compareTo(arr[j + 1]) > 0) {
+//                    swap(arr, i - 1, i);
+//                }
+//            }
+//        }
+
+        int n = arr.length;
+        int i;
+        do {
+            i = 0;
+            for (int j = 1; j < n; j++) {
+                if (arr[j - 1].compareTo(arr[j]) > 0) {
+                    swap(arr, j - 1, j);
+                    i = j;
                 }
             }
-        }
+            n = i;
+        } while (i > 0);
     }
 
     public static <E extends Comparable> void sort2(E[] arr) {
