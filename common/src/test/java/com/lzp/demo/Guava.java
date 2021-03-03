@@ -2,6 +2,8 @@ package com.lzp.demo;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.junit.Test;
@@ -123,4 +125,21 @@ public class Guava {
     }
 
 
+    @Test
+    public void testListMultimap() {
+        ListMultimap<String, String> listMultimap = ArrayListMultimap.create();
+        listMultimap.put("a", "100");
+        listMultimap.put("a", "200");
+        listMultimap.put("a", "300");
+        listMultimap.put("a", "300");
+        listMultimap.put("b", "1");
+        listMultimap.put("b", "2");
+        listMultimap.put("b", "3");
+
+        listMultimap.remove("a", "300");
+
+        List<String> aList = listMultimap.get("a");
+
+        System.out.println(aList);
+    }
 }

@@ -18,6 +18,7 @@ public class DemoTest {
     }
 
     public static void main(String[] args) {
+//        test01();
         // test04();
         // test06();
         // test07();
@@ -28,8 +29,8 @@ public class DemoTest {
      * treeifyBin
      */
     private static void test08() {
-        HashMap<User, User> map = new HashMap<User, User>();
-        for (int i = 1; i <= 20; i++) {
+        HashMap<User, User> map = new HashMap<User, User>(12);
+        for (int i = 1; i <= 12; i++) {
             User user = new User();
             map.put(user, user);
             System.out.println("i =" + i);
@@ -121,29 +122,33 @@ public class DemoTest {
     }
 
     private static void test01() {
-        System.out.println("0)) ==> " + tableSizeFor(0));
-        System.out.println("1)) ==> " + tableSizeFor(1));
-        System.out.println("2)) ==> " + tableSizeFor(2));
-        System.out.println("3)) ==> " + tableSizeFor(3));
-        System.out.println("4)) ==> " + tableSizeFor(4));
-        System.out.println("5)) ==> " + tableSizeFor(5));
-        System.out.println("6)) ==> " + tableSizeFor(6));
-        System.out.println("7)) ==> " + tableSizeFor(7));
-        System.out.println("8)) ==> " + tableSizeFor(8));
-        System.out.println("9)) ==> " + tableSizeFor(9));
-        System.out.println("10) ==> " + tableSizeFor(10));
-        System.out.println("11) ==> " + tableSizeFor(11));
-        System.out.println("12) ==> " + tableSizeFor(12));
-        System.out.println("13) ==> " + tableSizeFor(13));
-        System.out.println("14) ==> " + tableSizeFor(14));
-        System.out.println("15) ==> " + tableSizeFor(15));
-        System.out.println("16) ==> " + tableSizeFor(16));
-        System.out.println("17) ==> " + tableSizeFor(17));
-        System.out.println("18) ==> " + tableSizeFor(18));
-        System.out.println("19) ==> " + tableSizeFor(19));
-        System.out.println("20) ==> " + tableSizeFor(20));
-        System.out.println("100 ==> " + tableSizeFor(100));
-        System.out.println("200 ==> " + tableSizeFor(200));
+        System.out.println("0)) ==> " + tableSizeFor(0) + " - " + tableSizeFor(0) * 0.75);
+        System.out.println("1)) ==> " + tableSizeFor(1) + " - " + tableSizeFor(1) * 0.75);
+        System.out.println("2)) ==> " + tableSizeFor(2) + " - " + tableSizeFor(2) * 0.75);
+        System.out.println("3)) ==> " + tableSizeFor(3) + " - " + tableSizeFor(3) * 0.75);
+        System.out.println("4)) ==> " + tableSizeFor(4) + " - " + tableSizeFor(4) * 0.75);
+        System.out.println("5)) ==> " + tableSizeFor(5) + " - " + tableSizeFor(5) * 0.75);
+        System.out.println("6)) ==> " + tableSizeFor(6) + " - " + tableSizeFor(6) * 0.75);
+        System.out.println("7)) ==> " + tableSizeFor(7) + " - " + tableSizeFor(7) * 0.75);
+        System.out.println("8)) ==> " + tableSizeFor(8) + " - " + tableSizeFor(8) * 0.75);
+        System.out.println("9)) ==> " + tableSizeFor(9) + " - " + tableSizeFor(9) * 0.75);
+        System.out.println("10) ==> " + tableSizeFor(10) + " - " + tableSizeFor(10) * 0.75);
+        System.out.println("11) ==> " + tableSizeFor(11) + " - " + tableSizeFor(11) * 0.75);
+        System.out.println("12) ==> " + tableSizeFor(12) + " - " + tableSizeFor(12) * 0.75);
+        System.out.println("13) ==> " + tableSizeFor(13) + " - " + tableSizeFor(13) * 0.75);
+        System.out.println("14) ==> " + tableSizeFor(14) + " - " + tableSizeFor(14) * 0.75);
+        System.out.println("15) ==> " + tableSizeFor(15) + " - " + tableSizeFor(15) * 0.75);
+        System.out.println("16) ==> " + tableSizeFor(16) + " - " + tableSizeFor(16) * 0.75);
+        System.out.println("17) ==> " + tableSizeFor(17) + " - " + tableSizeFor(17) * 0.75);
+        System.out.println("18) ==> " + tableSizeFor(18) + " - " + tableSizeFor(18) * 0.75);
+        System.out.println("19) ==> " + tableSizeFor(19) + " - " + tableSizeFor(19) * 0.75);
+        System.out.println("20) ==> " + tableSizeFor(20) + " - " + tableSizeFor(20) * 0.75);
+        System.out.println("24) ==> " + tableSizeFor(24) + " - " + tableSizeFor(24) * 0.75);
+        System.out.println("48) ==> " + tableSizeFor(48) + " - " + tableSizeFor(48) * 0.75);
+        System.out.println("96) ==> " + tableSizeFor(96) + " - " + tableSizeFor(96) * 0.75);
+        System.out.println("100 ==> " + tableSizeFor(100) + " - " + tableSizeFor(100) * 0.75);
+        System.out.println("200 ==> " + tableSizeFor(200) + " - " + tableSizeFor(200) * 0.75);
+        System.out.println("256 ==> " + tableSizeFor(256) + " - " + tableSizeFor(256) * 0.75);
     }
 }
 
